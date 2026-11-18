@@ -7,8 +7,8 @@ const CONFIG = {
   rpcUrl: "https://bsc-dataseed1.bnbchain.org",
   blockExplorer: "https://bscscan.com",
 
-  // AgentGate contract address (set after deployment; null = not deployed yet).
-  contractAddress: null,
+  // AgentGate contract address — deployed 18 Nov 2026, BSC mainnet.
+  contractAddress: "0xd15c252F3C9dE3B6688dBBe7103b4858eBAa32b8",
 
   // Official SPACE ID Agent ID registry (ERC-721, non-transferable).
   agentIdRegistry: "0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F",
