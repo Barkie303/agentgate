@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentGate — Agent ID-gated allowlists</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<header>
+  <div class="wrap head-row">
+    <div>
+      <h1>AgentGate</h1>
+      <p class="tagline">Fair allowlists for free mints — one slot per Agent ID holder.</p>
+    </div>
+    <div class="wallet-box">
+      <button id="connectBtn">Connect Wallet</button>
+      <div id="walletInfo" class="wallet-info"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="deployNotice" class="notice hidden"></div>
+  <div id="status" class="status"></div>
+
+  <section class="card">
+    <h2>Campaigns</h2>
+    <p class="muted">Allowlist campaigns on BNB Chain. Only wallets holding an Agent ID can register — one slot each.</p>
+    <div id="campaignList" class="campaign-list"><p class="muted">Loading…</p></div>
+  </section>
+
+  <section class="card" id="detailSection" style="display:none">
+    <h2 id="detailTitle">Campaign</h2>
+    <div id="detailBody"></div>
+    <h3>Registrants</h3>
+    <div id="registrantList" class="muted">—</div>
+    <button id="closeDetailBtn" class="secondary">Back to list</button>
+  </section>
+
+  <section class="card">
+    <h2>Create a campaign</h2>
+    <p class="muted">Anyone can create an allowlist campaign. Registration is gated on-chain to Agent ID holders.</p>
+    <form id="createForm">
+      <label>Campaign name
+        <input id="fName" type="text" required maxlength="100" placeholder="e.g. Genesis Mint Allowlist">
+      </label>
+      <label>Max slots
+        <input id="fSlots" type="number" required min="1" max="100000" placeholder="e.g. 1000">
+      </label>
+      <label>Registration deadline
+        <input id="fDeadline" type="datetime-local" required>
+      </label>
+      <label>Metadata URI (optional)
+        <input id="fMeta" type="text" maxlength="500" placeholder="https://your-project.example/allowlist.json">
+      </label>
+      <button type="submit" id="createBtn">Create campaign</button>
+    </form>
+  </section>
+
+  <section class="card small">
+    <h2>How it works</h2>
+    <ol>
+      <li>A project creates a campaign with a slot limit and a deadline.</li>
+      <li>Agent ID holders register with one transaction. The contract checks on-chain that the caller holds an Agent ID (<code>balanceOf &gt; 0</code> on the Agent ID registry).</li>
+      <li>Each user can hold exactly one non-transferable Agent ID, so one registration per address means one slot per real holder — no sybil farming.</li>
+      <li>Projects export the registrant list on-chain and use it for their mint or claim.</li>
+    </ol>
+    <p class="muted">AgentGate never holds or moves user funds. Only a campaign's creator can close that campaign early. This site asks your wallet to sign transactions — you always confirm them yourself in your wallet. Never share a seed phrase or private key with any site, including this one.</p>
+  </section>
+</main>
+
+<footer class="wrap muted small">
+  AgentGate — built for the Binance Agent ID Hackathon. Contract: <span id="contractAddr">not deployed yet</span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
